@@ -376,7 +376,16 @@ body[data-tab="sopa"] .tab.is-active { color: var(--brown); }
   aspect-ratio: 277 / 234;
   display: grid;
   place-items: center;
+  transform: rotateY(0deg); /* capa 3D propia: evita el parpadeo al girar en Safari/Chrome del celular */
 }
+/* todo lo que se anima dentro de una cara también se oculta de espaldas */
+.face *, .face::after {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* mientras la tarjeta está dada vuelta, la foto de atrás deja de flotar */
+.flip.is-flipped .face-front .float-soft,
+.flip.is-flipped .flip-hint { animation-play-state: paused; }
 .face-front .obj { max-height: 82%; object-fit: contain; filter: drop-shadow(0 14px 12px rgba(0, 0, 0, .35)); }
 .face-front::after { /* destello al pasar el mouse */
   content: "";
@@ -387,7 +396,9 @@ body[data-tab="sopa"] .tab.is-active { color: var(--brown); }
   transition: transform .9s var(--ease-out);
   pointer-events: none;
 }
-.flip:hover .face-front::after { transform: translateX(120%); }
+@media (hover: hover) {
+  .flip:hover .face-front::after { transform: translateX(120%); }
+}
 .face-duo { display: block; }
 .face-duo .obj-a { position: absolute; width: 58%; top: 14%; right: 10%; }
 .face-duo .obj-b { position: absolute; width: 46%; top: 44%; left: 9%; }
@@ -446,7 +457,9 @@ body[data-tab="sopa"] .tab.is-active { color: var(--brown); }
 }
 .flip-brown .flip-hint { color: var(--gold); }
 .flip-gold .flip-hint { color: var(--brown); }
-.flip:hover .flip-hint { transform: rotate(200deg) scale(1.08); animation-play-state: paused; }
+@media (hover: hover) {
+  .flip:hover .flip-hint { transform: rotate(200deg) scale(1.08); animation-play-state: paused; }
+}
 
 /* =========================================================
    SOPA DE LETRAS
