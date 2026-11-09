@@ -531,6 +531,16 @@ body[data-tab="sopa"] .tab.is-active { color: var(--brown); }
   box-shadow: 0 22px 34px -20px rgba(25, 6, 0, .6);
 }
 .puzzle-back { transform: rotateY(180deg); }
+.puzzle-front { transform: rotateY(0deg); } /* capa 3D propia (Safari/Chrome del celular) */
+.puzzle-face *, .puzzle-face svg * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* refuerzo: a mitad del giro, la cara que queda de espaldas se oculta del todo,
+   así las letras de las dos grillas nunca se mezclan */
+.puzzle-front, .puzzle-back { transition: visibility 0s linear .13s; } /* el giro pasa la mitad a los .13 s */
+.puzzle.is-flipped .puzzle-front,
+.puzzle:not(.is-flipped) .puzzle-back { visibility: hidden; }
 
 .grid {
   --cell: 22px;
